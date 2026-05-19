@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  backend:
+    build: ./backend
+    container_name: backend
+    restart: unless-stopped
+    env_file: ./backend/.env # Aquí están tus credenciales de Clever Cloud
+    expose:
+      - "3000" # Solo accesible para Nginx internamente
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - "80:80" # Único puerto expuesto a tu Windows
+    depends_on:
+      - backend # Nginx espera a que Node levante

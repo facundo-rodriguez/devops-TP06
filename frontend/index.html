@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Tienda - TP06</title>
+    <style>
+        body { font-family: Arial; margin: 40px; background: #f4f4f4; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Productos desde Clever Cloud</h1>
+        <ul id="lista-productos">Cargando...</ul>
+    </div>
+
+    <script>
+        fetch('/api/products')
+            .then(res => res.json())
+            .then(data => {
+                const list = document.getElementById('lista-productos');
+                list.innerHTML = data.map(p => `<li>${p.nombre_producto} - <strong>$${p.precio}</strong></li>`).join('');
+            })
+            .catch(err => document.getElementById('lista-productos').innerText = 'Error al cargar');
+    </script>
+</body>
+</html>
